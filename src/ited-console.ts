@@ -53,6 +53,25 @@ export class ITEDConsole {
                 result.textContent = this.nodeTree.reverse(commandMembers[1]);
                 break;
             }
+            case 'wallet': {
+                switch(commandMembers[1]) {
+                    case 'balance': {
+                        switch(commandMembers[2]) {
+                            case 'show': {
+                                result.textContent = String(this.nodeTree.balance());
+                                break;
+                            }
+                            case 'change': {
+                                this.nodeTree.changeBalance(Number(commandMembers[3]))
+                                result.textContent = "Balance changed to " + String(this.nodeTree.balance());
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
             case 'create': {
                 switch (commandMembers[1]) {
                     case 'cat': {
