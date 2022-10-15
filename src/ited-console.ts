@@ -41,48 +41,22 @@ export class ITEDConsole {
                 result.textContent = `Test command works!`;
                 break;
             }
-            case 'ping': {
-                result.textContent = `pong`;
-                break;
-            }
-            case 'time': {
-                result.textContent = Date();
-                break;
-            }
-            case 'reverse': {
-                result.textContent = this.nodeTree.reverse(commandMembers[1]);
-                break;
-            }
-            case 'wallet': {
-                switch(commandMembers[1]) {
-                    case 'balance': {
-                        switch(commandMembers[2]) {
-                            case 'show': {
-                                result.textContent = String(this.nodeTree.balance());
-                                break;
-                            }
-                            case 'change': {
-                                this.nodeTree.changeBalance(Number(commandMembers[3]))
-                                result.textContent = "Balance changed to " + String(this.nodeTree.balance());
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
             case 'create': {
-                switch (commandMembers[1]) {
-                    case 'cat': {
-                        result.textContent = `Был создан кот по имени ${commandMembers[2]}`;
-                        break;
-                    }
-                    case 'dog': {
-                        result.textContent = `Был создан пёс по имени ${commandMembers[2]}`;
-                        break;
-                    }
+                if (!commandMembers[2]) {
+                    result.textContent = this.nodeTree.create(commandMembers[1]);
+                } else {
+                    result.textContent = this.nodeTree.create(commandMembers[2], commandMembers[1]);
                 }
+                
+                break;
+            }
+            case 'show_tree': {
+                for (let jopa of this.nodeTree.showTree()) {
+                    let temp: HTMLElement = document.createElement('DIV')
+                    temp.textContent = jopa
+                    this.history.appendChild(temp);
+                }
+                return;
                 break;
             }
           //  Здесь необходимо обеспечить обработку комманд

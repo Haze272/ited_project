@@ -1,21 +1,62 @@
 export class NodeTree {
-    walletBalance = 0;
+    root: Branch = new Branch("N/A");
+    treeStr: string[] = [];
 
-    changeBalance(balance: number) {
-        this.walletBalance = balance;
-    }
+    public create(name: string, parentName?: string): string {
+        if (!parentName) {
+            this.root = new Branch(name);
 
-    balance(): number {
-        return this.walletBalance;
-    }
+            return `Узел ${name} был создан!`;
+        } else {
 
-    reverse(str: string): string {
-        var newString = "";
-        for (var i = str.length - 1; i >= 0; i--) {
-            newString += str[i];
+            let parent = this.findBranchByName(this.root, parentName);
+            if (parent) {
+                parent._children.push(new Branch(name));
+                return `Узёл ${name} был создан как потомок узла ${parentName}`;
+            } else {
+                return `Узел потомк не был найден!`;
+            }
         }
-        return newString;
+    }
 
+    public showTree(): string[] {
+        this.treeStr[0] = this.root._name;
+        this.makeTreeDiagramm(this.root, 0);
+        console.log(this.treeStr)
+        return this.treeStr;
+    }
+
+    makeTreeDiagramm(branch: Branch, level: number) {
+        level++;
+        if (branch._children.length > 0) {
+            for (let item of branch._children) {
+                this.treeStr.push(('\n' + '__'.repeat(level) + item._name))
+                this.makeTreeDiagramm(item, level)
+            }
+        }
+    }
+
+    public findBranchByName(parent: Branch, name: string): Branch | undefined {
+        if (parent._name === name) return parent;
+
+        if (parent._children != null) {
+            for (let branch of parent._children as Branch[]) {
+                if (branch._name === name) {
+                    return branch;
+                }
+            }
+            for (let branch1 of parent._children as Branch[]) {
+                return this.findBranchByName(branch1, name);
+            }
+        }
     }
 }
 
+export class Branch {
+    _name: string;
+    _children: Branch[] = [];
+
+    constructor(name: string) {
+        this._name = name;
+    }
+}
