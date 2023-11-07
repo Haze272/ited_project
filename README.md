@@ -19,7 +19,6 @@ http://localhost:9000/
 ```
 
 Перейдя по адресу вы обнаружите пользовательский интерфейс приложения. Он включаеет навигацию и окно "консоли" в центре. Работа консоли имитирует таковые в операционных системах.
-![alt text](https://github.com/Haze272/ited_project/blob/main/screenshots/test_command.jpg)
 
 ## Структура приложения
 
@@ -43,6 +42,9 @@ switch(command) {
     }
 }
 ```
+
+![alt text](https://github.com/Haze272/ited_project/blob/main/screenshots/test_command.jpg)
+
 Таким образом была создана команда "создать кота". Чтобы команда выполнилась, необходимо написать `create cat {имя_кота}`
 
 При выполнении заданий присвоение значения result.textContent должно происходить исходя из возвращаемого метода объекта nodeTree. Пример: result.textContent = nodeTree.createCat()
